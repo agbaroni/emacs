@@ -2,7 +2,8 @@
 
 (setq custom-file "custom.el")
 
-(setq gc-cons-percentage 0.25)
+(setq gc-cons-threshold (* 100 1024 1024))
+(setq read-process-output-max (* 1024 1024))
 
 (setq package-archives '(("elpa" . "https://elpa.gnu.org/packages/")
 			 ("melpa" . "https://stable.melpa.org/packages/")))
@@ -33,6 +34,15 @@
 	    (tool-bar-mode -1)
 	    (toggle-frame-fullscreen))
   :ensure t)
+
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+
+(use-package lsp-mode
+  :commands lsp
+  :ensure t
+  :hook ((c++-mode . lsp)))
 
 (use-package marginalia
   :config (marginalia-mode)
