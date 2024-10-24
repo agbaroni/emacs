@@ -2,13 +2,15 @@
 
 (setq custom-file "custom.el")
 
-(setq gc-cons-threshold (* 100 1024 1024))
+(setq gc-cons-threshold (* 256 1024 1024))
 (setq read-process-output-max (* 1024 1024))
 
 (setq package-archives '(("elpa" . "https://elpa.gnu.org/packages/")
-			 ("melpa" . "https://stable.melpa.org/packages/")))
+			 ("melpa" . "https://melpa.org/packages/")
+			 ("stable-melpa" . "https://stable.melpa.org/packages/")))
 
-(setq package-archive-priorities '(("melpa" . 1)
+(setq package-archive-priorities '(("melpa" . 0)
+				   ("stable-melpa" . 1)
 				   ("elpa" . 2)))
 
 (package-refresh-contents)
@@ -42,7 +44,11 @@
 (use-package lsp-mode
   :commands lsp
   :ensure t
-  :hook ((c++-mode . lsp)))
+  :hook ((c++-mode . lsp)
+	 (haskell-mode . lsp)))
+
+(use-package lsp-ui
+  :ensure t)
 
 (use-package marginalia
   :config (marginalia-mode)
@@ -52,8 +58,7 @@
   :ensure t)
 
 (use-package undo-tree
-  :config
-  (global-undo-tree-mode)
+  :config (global-undo-tree-mode)
   :ensure t)
 
 (use-package vertico
